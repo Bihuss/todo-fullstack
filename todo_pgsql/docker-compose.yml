@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    container_name: todo_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: todo_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kolega321
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build: .
+    container_name: todo_api
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:

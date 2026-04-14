@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    hashed_password TEXT NOT NULL,
+    disabled BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id SERIAL PRIMARY KEY,
+    tekst TEXT NOT NULL,
+    zrobione BOOLEAN NOT NULL DEFAULT FALSE,
+    user_id INTEGER REFERENCES users(id)
+);
+
